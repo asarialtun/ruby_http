@@ -18,7 +18,7 @@ class WebServer
 
   def command_handle (command)
     case command
-    when 'GET' then Command.get(@path)
+    when 'GET' then return Command.get(@path)
 
     else
       puts "Sorry, unknown command: #{command}"
@@ -38,7 +38,7 @@ class WebServer
       end
       parse_request(request)
 
-      command_handle(@command)
+      connection.puts command_handle(@command)
 
       request.clear
       connection.close
