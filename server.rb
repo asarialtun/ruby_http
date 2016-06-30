@@ -38,8 +38,8 @@ class WebServer
       end
       parse_request(request)
 
-      connection.puts command_handle(@command)
-
+      connection.puts command_handle(@command)[0]
+      IO.copy_stream command_handle(@command)[1],connection
       request.clear
       connection.close
     end

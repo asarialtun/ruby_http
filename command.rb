@@ -6,26 +6,25 @@ module Command
 
   def Command.construct_get_response(path)
     response_code = ""
-    date = construct_date
+    date = "Date: construct_date\r\n"
     file_path = "./#{path}"
     if File.exist?(file_path)
-      response_code = "HTTP/1.1 200 OK"
+      response_code = "HTTP/1.1 200 OK\r\n"
     else
-      response_code = "HTTP/1.1 404 Not Found"
+      response_code = "HTTP/1.1 404 Not Found\r\n"
       file_path = "./404.html"
     end
-
+    server =  "Server: Ruby HTTP server by DevWanderer\r\n"
+    content_type = "Content-Type: text/html\r\n"
     file = File.open(file_path,"r")
-    response = %{
-      #{response_code}
-      Date: #{date}
-      Server: Ruby HTTP server by DevWanderer
-    }
+    content_length = "Content-Length: #{file.size}\r\n"
+    response = response_code + date + content_type + content_length +server + "Connection: close\r\n" + "\r\n"
 
-    file.each do |line|
-      response += line
-    end
-    return response
+    arr = Array.new
+    arr << response
+    arr << file
+
+    return arr
   end
 
   def Command.get(path)
