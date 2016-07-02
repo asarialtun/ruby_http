@@ -6,7 +6,7 @@ module Command
 
   def Command.construct_get_response(path)
     response_code = ""
-    date = "Date: construct_date\r\n"
+    date = "Date: #{construct_date}\r\n"
     file_path = "./#{path}"
     if File.exist?(file_path)
       response_code = "HTTP/1.1 200 OK\r\n"
